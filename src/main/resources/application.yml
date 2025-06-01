@@ -1,0 +1,13 @@
+# 项目服务名
+spring:
+  application:
+      name: AI-Doctor
+
+# 配置日志级别
+logging:
+    level:
+        root: info
+
+# 端口号
+server:
+    port: 8081
