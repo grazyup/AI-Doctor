@@ -1,7 +1,14 @@
 # 项目服务名
 spring:
-  application:
+    application:
       name: AI-Doctor
+# AI配置
+    ai:
+      ollama:
+          base-url: http://127.0.0.1:11434
+          chat:
+              model: deepseek-r1:7b
+
 
 # 配置日志级别
 logging:
