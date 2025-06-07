@@ -59,12 +59,12 @@ public class SSEServer {
      * @param msg
      * @return
      */
-    public static SseEmitter sentMessage(String connectId, String msg, SSEMsgType sseMsgType) {
+    public static void sentMessage(String connectId, String msg, SSEMsgType sseMsgType) {
         // 判断是或存在当前连接对象
         SseEmitter sseEmitter = sseClients.get(connectId);
         if(sseEmitter == null){
             log.info("连接对象【{}】不存在", connectId);
-            return null;
+            return;
         }
         try {
             SseEmitter.SseEventBuilder message = SseEmitter.event()
@@ -76,7 +76,6 @@ public class SSEServer {
             log.error("对象【{}】推送消息发生异常, 异常信息：{}", connectId, e.getMessage());
             removeSSE(connectId);
         }
-        return null;
     }
 
     /****************************** private **************************************/

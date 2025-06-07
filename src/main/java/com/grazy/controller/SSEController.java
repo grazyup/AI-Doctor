@@ -38,8 +38,9 @@ public class SSEController {
      * @return
      */
     @GetMapping("/sentMessage")
-    public SseEmitter sseConnect(@RequestParam String connectId, @RequestParam String msg){
-        return SSEServer.sentMessage(connectId, msg, SSEMsgType.MESSAGE);
+    public Object sseConnect(@RequestParam String connectId, @RequestParam String msg){
+        SSEServer.sentMessage(connectId, msg, SSEMsgType.MESSAGE);
+        return "ok";
     }
 
 }
