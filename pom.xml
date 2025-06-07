@@ -53,6 +53,12 @@
 <!--            <version>3.5.7</version>-->
 <!--        </dependency>-->
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+        </dependency>
+
         <!--Spring-Ai 依赖-->
         <dependency>
             <groupId>io.springboot.ai</groupId>
