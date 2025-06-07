@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -76,6 +77,19 @@ public class SSEServer {
             log.error("对象【{}】推送消息发生异常, 异常信息：{}", connectId, e.getMessage());
             removeSSE(connectId);
         }
+    }
+
+
+    /**
+     * 广播消息到全部在线的客户端
+     * @param msg
+     * @param sseMsgType
+     */
+    public static void fanoutSentMessage(String msg, SSEMsgType sseMsgType){
+        Set<String> connectIds = sseClients.keySet();
+        connectIds.forEach(connectId -> {
+           sentMessage(connectId, msg, sseMsgType);
+        });
     }
 
     /****************************** private **************************************/

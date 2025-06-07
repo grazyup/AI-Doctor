@@ -30,7 +30,7 @@ public class SSEController {
 
 
     /**
-     * 向单一客户端推送单条消息
+     * 向单一客户端推送单条消息 (postman调用测试)
      * @param connectId
      * @param msg
      * @return
@@ -38,6 +38,18 @@ public class SSEController {
     @GetMapping("/sentMessage")
     public Object sseConnect(@RequestParam String connectId, @RequestParam String msg){
         SSEServer.sentMessage(connectId, msg, SSEMsgType.MESSAGE);
+        return "ok";
+    }
+
+
+    /**
+     * 广播推送单条消息 (postman调用测试)
+     * @param msg
+     * @return
+     */
+    @GetMapping("/fanoutSentMessage")
+    public Object fanoutSentMessage(@RequestParam String msg){
+        SSEServer.fanoutSentMessage(msg, SSEMsgType.MESSAGE);
         return "ok";
     }
 
