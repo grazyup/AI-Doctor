@@ -4,10 +4,7 @@ import com.grazy.enums.SSEMsgType;
 import com.grazy.utils.SSEServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 /**
@@ -18,6 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @Slf4j
 @RestController
 @RequestMapping("sse")
+@CrossOrigin(origins = "http://127.0.0.1:5501")
 public class SSEController {
 
     /**
@@ -32,7 +30,7 @@ public class SSEController {
 
 
     /**
-     * 向客户端推送单条消息
+     * 向单一客户端推送单条消息
      * @param connectId
      * @param msg
      * @return
