@@ -1,9 +1,13 @@
 package com.grazy.utils;
 
+import com.grazy.enums.SSEMsgType;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,8 +21,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SSEServer {
 
     // 保存连接信息
-    private static Map<String, SseEmitter> sseClients = new ConcurrentHashMap<>();
+    public static Map<String, SseEmitter> sseClients = new ConcurrentHashMap<>();
 
+    /**
+     * 建立 sse 连接
+     * @param connectId
+     * @return
+     */
     public static SseEmitter connect(String connectId){
         // 默认过期时间为30s,目前设置永不不过期
         SseEmitter sseEmitter = new SseEmitter(0L);
@@ -40,10 +49,37 @@ public class SSEServer {
 
         // 储存
         sseClients.put(connectId, sseEmitter);
-        log.info("对象{}，创建SSE连接成功", connectId);
+        log.info("对象【{}】，创建SSE连接成功", connectId);
         return sseEmitter;
     }
 
+    /**
+     * 向客户端推动消息
+     * @param connectId
+     * @param msg
+     * @return
+     */
+    public static SseEmitter sentMessage(String connectId, String msg, SSEMsgType sseMsgType) {
+        // 判断是或存在当前连接对象
+        SseEmitter sseEmitter = sseClients.get(connectId);
+        if(sseEmitter == null){
+            log.info("连接对象【{}】不存在", connectId);
+            return null;
+        }
+        try {
+            SseEmitter.SseEventBuilder message = SseEmitter.event()
+                    .id(connectId)
+                    .name(sseMsgType.type)
+                    .data(msg);
+            sseEmitter.send(message);
+        } catch (IOException e) {
+            log.error("对象【{}】推送消息发生异常, 异常信息：{}", connectId, e.getMessage());
+            removeSSE(connectId);
+        }
+        return null;
+    }
+
+    /****************************** private **************************************/
 
     private static void SSECompletion(String connectId){
         log.info("客户端{}，SSE任务执行完成", connectId);

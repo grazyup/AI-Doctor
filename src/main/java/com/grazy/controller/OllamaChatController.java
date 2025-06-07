@@ -13,7 +13,7 @@ import reactor.core.publisher.Flux;
 /**
  * @Author: grazy
  * @Date: 2025-06-02 22:04
- * @Description:
+ * @Description: 测试调用本地 ollama 接口
  */
 
 @RestController
