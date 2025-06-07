@@ -3,8 +3,6 @@ package com.grazy.utils;
 import com.grazy.enums.SSEMsgType;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
@@ -53,6 +51,7 @@ public class SSEServer {
         log.info("对象【{}】，创建SSE连接成功", connectId);
         return sseEmitter;
     }
+
 
     /**
      * 向客户端推动消息

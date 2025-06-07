@@ -2,6 +2,7 @@ package com.grazy.controller;
 
 import com.grazy.enums.SSEMsgType;
 import com.grazy.utils.SSEServer;
+import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +51,31 @@ public class SSEController {
     @GetMapping("/fanoutSentMessage")
     public Object fanoutSentMessage(@RequestParam String msg){
         SSEServer.fanoutSentMessage(msg, SSEMsgType.MESSAGE);
+        return "ok";
+    }
+
+
+    /**
+     * 使用追加的方式推动消息 (postman调用测试)
+     * @param msg
+     * @return
+     */
+    @GetMapping("/addSentMessage")
+    public Object addSentMessage(@RequestParam String msg,
+                                 @RequestParam(required = false) String connectId) throws Exception{
+
+        char[] charArray = msg.toCharArray();
+        for (char c : charArray) {
+            Thread.sleep(100);
+            String msgStr = String.valueOf(c);
+            if (StringUtils.isBlank(connectId)) {
+                // 使用广播的方式
+                SSEServer.fanoutSentMessage(msgStr, SSEMsgType.ADD);
+            } else {
+                // 向指定用户推送
+                SSEServer.sentMessage(connectId, msgStr, SSEMsgType.ADD);
+            }
+        }
         return "ok";
     }
 
