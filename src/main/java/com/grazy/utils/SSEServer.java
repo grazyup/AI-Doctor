@@ -91,6 +91,22 @@ public class SSEServer {
         });
     }
 
+
+    /**
+     * 完成任务/会话关闭，断开连接
+     * @param connectId
+     */
+    public static void stopSSEConnect(String connectId) {
+        SseEmitter sseEmitter = sseClients.get(connectId);
+        if(sseEmitter != null){
+            // 这个里面会回调 onComplete方法
+            sseEmitter.complete();
+            log.info("会话关闭成功");
+        } else {
+            log.warn("会话已关闭");
+        }
+    }
+
     /****************************** private **************************************/
 
     private static void SSECompletion(String connectId){

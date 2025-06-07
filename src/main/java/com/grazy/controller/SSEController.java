@@ -79,4 +79,16 @@ public class SSEController {
         return "ok";
     }
 
+
+    /**
+     * 断开 sse 连接
+     *   调用这个接口断开连接后，sse客户端会触发重连机制，再次携带相同的connectId进行连接
+     * @param connectId
+     * @return
+     */
+    @GetMapping("/stopSSEConnect")
+    public Object stopSSEConnect(@RequestParam String connectId){
+        SSEServer.stopSSEConnect(connectId);
+        return "ok";
+    }
 }
