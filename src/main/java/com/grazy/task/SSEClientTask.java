@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 import static com.grazy.utils.SSEServer.sseClients;
 
 /**
@@ -20,6 +22,7 @@ public class SSEClientTask {
      */
     @Scheduled(fixedRate = 300000)
     private void printfSSEClientsData(){
-        log.info("sse 连接详情数据：{}， 总连接数为：{}", sseClients, sseClients.keySet().size());
+        Set<String> connectIds = sseClients.keySet();
+        log.info("sse 连接详情数据：{}， 总连接数为：{}", connectIds, connectIds.size());
     }
 }
