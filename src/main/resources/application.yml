@@ -7,7 +7,7 @@ spring:
       ollama:
           base-url: http://127.0.0.1:11434
           chat:
-              model: deepseek-r1:7b
+              model: my-doctor:0.1
 
 
 # 配置日志级别
