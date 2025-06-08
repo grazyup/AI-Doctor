@@ -26,6 +26,12 @@ public class SSEServer {
      * 建立 sse 连接
      * @param connectId
      * @return
+     *  todo:
+     *      问题： 这里会有一个重连的问题，就是在执行 complete 之后，会移除这个 map 中维护的连接对象，那么客户端在断开后会发起重连机制，
+     *          就会重新使用相同的 connectId 不同的 sseEmitter 对象存储到 map 集合中，那么在调用统计数据的时候前后不就没有发生改变吗 ？？？
+     *      解决方案:
+     *          1. 客户端禁止重连
+     *          2. 前端是否可以判断是手动断开还是因为其他问题断开的？？
      */
     public static SseEmitter connect(String connectId){
         // 默认过期时间为30s,目前设置永不不过期
@@ -99,8 +105,10 @@ public class SSEServer {
     public static void stopSSEConnect(String connectId) {
         SseEmitter sseEmitter = sseClients.get(connectId);
         if(sseEmitter != null){
-            // 这个里面会回调 onComplete方法
+            // 这个里面会回调 onComplete方法 (这个回调是异步的，如果在回调执行前就查询在线数量，有可能会查到没有移除后的数量)
             sseEmitter.complete();
+            // 为了保证移除的准确性，可以先执行同步移除
+            removeSSE(connectId);
             log.info("会话关闭成功");
         } else {
             log.warn("会话已关闭");
