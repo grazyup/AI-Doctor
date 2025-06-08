@@ -1,6 +1,13 @@
 package com.grazy.controller;
 
+import com.grazy.entity.ChatRecordDo;
+import com.grazy.service.ChatRecordService;
+import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @Author: grazy
@@ -10,4 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ChatRecordController {
+
+    @Resource
+    private ChatRecordService chatRecordService;
+
+    @GetMapping("ai/chatRecord")
+    public List<ChatRecordDo> fetchChatRecord(@RequestParam String who){
+        return chatRecordService.fetchChatRecord(who);
+    }
+
 }

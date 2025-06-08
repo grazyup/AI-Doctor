@@ -1,5 +1,6 @@
 package com.grazy.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.grazy.entity.ChatRecordDo;
 import com.grazy.enums.ChatObjectTypeEnum;
 import com.grazy.mapper.ChatRecordMapper;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Author: grazy
@@ -36,5 +38,12 @@ public class ChatRecordServiceImpl implements ChatRecordService {
         chatRecordMapping.insert(chatRecordDo);
 
         log.info("消息归属：【{}】, 消息内容：{}， 发消息者的身份：{}", userName, content, objectTypeEnum.desc);
+    }
+
+    @Override
+    public List<ChatRecordDo> fetchChatRecord(String who) {
+        LambdaQueryWrapper<ChatRecordDo> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(ChatRecordDo::getMember, who);
+        return chatRecordMapping.selectList(lambdaQueryWrapper);
     }
 }
