@@ -9,6 +9,7 @@ import org.springframework.ai.chat.ChatResponse;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.ollama.OllamaChatClient;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
 /**
@@ -17,6 +18,7 @@ import reactor.core.publisher.Flux;
  * @Description:
  */
 @Slf4j
+@Service
 public class OllamaServiceImpl implements OllamaService {
 
     @Resource

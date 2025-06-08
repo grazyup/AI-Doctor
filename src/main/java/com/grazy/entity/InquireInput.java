@@ -14,7 +14,7 @@ public class InquireInput {
     /**
      * 实际上就是与 connectId 一样
      */
-    private String userName;
+    private String currentUserName;
 
     /**
      * 询问的消息

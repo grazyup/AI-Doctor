@@ -7,10 +7,7 @@ import org.springframework.ai.chat.ChatResponse;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.ollama.OllamaChatClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 /**
@@ -53,9 +50,9 @@ public class OllamaChatController {
      * 最终接口-调用大模型解答疑难杂症
      * @param inquireInput
      */
-    @GetMapping("/ai/inquire")
+    @PostMapping("/ai/inquire")
     public void inquireDoctor(@RequestBody InquireInput inquireInput){
-        ollamaService.inquireDoctor(inquireInput.getUserName(), inquireInput.getMessage());
+        ollamaService.inquireDoctor(inquireInput.getCurrentUserName(), inquireInput.getMessage());
     }
 }
 

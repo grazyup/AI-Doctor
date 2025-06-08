@@ -15,8 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
  */
 @Slf4j
 @RestController
-@RequestMapping("sse")
-@CrossOrigin(origins = "http://127.0.0.1:5501")
+@RequestMapping(value = "sse")
 public class SSEController {
 
     /**
