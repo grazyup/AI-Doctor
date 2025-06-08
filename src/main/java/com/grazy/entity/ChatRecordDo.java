@@ -1,5 +1,6 @@
 package com.grazy.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -15,8 +16,8 @@ import java.time.LocalDateTime;
 @TableName("chat_record")
 public class ChatRecordDo {
 
-    @TableId
-    private String id;
+    @TableId(type = IdType.AUTO)
+    private Integer id;
 
     /**
      * 会话聊天内容 用户/AI

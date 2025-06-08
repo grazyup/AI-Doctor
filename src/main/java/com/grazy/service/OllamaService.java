@@ -7,11 +7,10 @@ import org.springframework.stereotype.Service;
  * @Date: 2025-06-08 21:11
  * @Description:
  */
-@Service
 public interface OllamaService {
 
     /**
-     * 执行大模型医生
+     * 询问大模型医生
      * @param userName
      * @param message
      */
